@@ -1,5 +1,4 @@
-package WS1.Nimbus1;
-
+package WS1.Nimbus1;// RandomSupplier.java
 import java.util.Random;
 
 public class RandomSupplier {

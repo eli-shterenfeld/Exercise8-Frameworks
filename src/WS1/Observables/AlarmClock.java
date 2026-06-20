@@ -1,28 +1,32 @@
-package WS1.Observables;
-
-
+package WS1.Observables;// AlarmClock.java
 import java.util.ArrayList;
 
-public class AlarmClock
-{
+public class AlarmClock {
     public final int CLOCK_INTERVAL_MILLIS = 100;
     protected static AlarmClock instance = null;
-    private ArrayList<AlarmClockRecord> itsAlarmClockRecords = new ArrayList();
+    private ArrayList<AlarmClockRecord> itsAlarmClockRecords = new ArrayList<>();
 
     protected AlarmClock() {}
-    public static AlarmClock theInstance()
-    {
-        if(null==instance)
+
+    public static AlarmClock theInstance() {
+        if(null == instance)
             instance = new AlarmClock();
         return instance;
     }
 
-    protected void tic(){
-        //TODO: fix
+    protected void tic() {
+        for (AlarmClockRecord record : itsAlarmClockRecords) {
+            int remaining = record.getRemainingTime() - CLOCK_INTERVAL_MILLIS;
+            if (remaining <= 0) {
+                record.getListener().wakeup();
+                record.setRemainingTime(record.getInterval());
+            } else {
+                record.setRemainingTime(remaining);
+            }
+        }
     }
 
     public void register(int interval, AlarmListener pal) {
-        //TODO: fix
+        itsAlarmClockRecords.add(new AlarmClockRecord(interval, pal));
     }
 }
-

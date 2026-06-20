@@ -3,40 +3,44 @@ package WS1.Observables;
 import WS1.Nimbus1.Nimbus1Clock;
 import WS1.Nimbus1.Nimbus1PressureSensor;
 import WS1.Nimbus1.Nimbus1TemperatureSensor;
+import WS1.Observers.Observer;
 
+// WeatherMonitoringSystem.java
 public class WeatherMonitoringSystem {
     private static WeatherMonitoringSystem instance = null;
+    private Nimbus1TemperatureSensor tempSensor;
+    private Nimbus1PressureSensor pressSensor;
+    private PressureTrendSensor pressTrendSensor;
 
-    private Nimbus1PressureSensor pressureSensor;
-    private Nimbus1TemperatureSensor temperatureSensor;
-    private PressureTrendSensor pressureTrendSensor;
+    protected WeatherMonitoringSystem() {
+        System.out.println("WeatherMonitoringSystem was created");
 
-    private WeatherMonitoringSystem() {
         Nimbus1Clock.theInstance();
 
-        pressureSensor = new Nimbus1PressureSensor("pressure", 1100);
-        temperatureSensor = new Nimbus1TemperatureSensor("temperature", 700);
-        pressureTrendSensor = new PressureTrendSensor("pressure trend");
+        pressSensor = new Nimbus1PressureSensor("pressure", 1100);
+        tempSensor = new Nimbus1TemperatureSensor("temperature", 700);
 
-        pressureSensor.addObserver(pressureTrendSensor);
+        pressTrendSensor = new PressureTrendSensor();
+        pressSensor.addObserver(pressTrendSensor);
+        System.out.println("PressureTrendSensor observes pressure");
     }
 
     public static WeatherMonitoringSystem theInstance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new WeatherMonitoringSystem();
-
+        }
         return instance;
     }
 
-    public void addTemperatureObserver(WS1.Observers.Observer observer) {
-        temperatureSensor.addObserver(observer);
+    public void addTempObserver(Observer o) {
+        tempSensor.addObserver(o);
     }
 
-    public void addPressureObserver(WS1.Observers.Observer observer) {
-        pressureSensor.addObserver(observer);
+    public void addPressObserver(Observer o) {
+        pressSensor.addObserver(o);
     }
 
-    public void addPressureTrendObserver(WS1.Observers.Observer observer) {
-        pressureTrendSensor.addObserver(observer);
+    public void addPressTrendObserver(Observer o) {
+        pressTrendSensor.addObserver(o);
     }
 }

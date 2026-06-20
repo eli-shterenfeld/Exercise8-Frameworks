@@ -1,15 +1,18 @@
-package WS1.Nimbus1;
-
+package WS1.Nimbus1;// Nimbus1TemperatureSensor.java
 import WS1.Observables.Sensor;
 
+import java.util.Random;
+
 public class Nimbus1TemperatureSensor extends Sensor {
+    private Random rnd;
+
     public Nimbus1TemperatureSensor(String type, int interval) {
         super(type, interval);
-        System.out.println("Nimbus1TemperatureSensor was created");
+        rnd = RandomSupplier.getRnd();
     }
 
     @Override
-    public int read() {
-        return RandomSupplier.getRnd().nextInt(40);
+    protected int read() {
+        return rnd.nextInt(40);
     }
 }

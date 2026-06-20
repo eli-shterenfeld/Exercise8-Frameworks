@@ -1,21 +1,22 @@
 package WS1.Observers;
 
 import WS1.Observables.WeatherMonitoringSystem;
-import WS1.Observables.Trend;
 
-public class Log {
-    public Log(WeatherMonitoringSystem ws) {
-        System.out.println("Log was created");
-
-        ws.addPressureObserver(new LogPressObserver(this));
-        ws.addPressureTrendObserver(new LogPressTrendObserver(this));
+// MonitoringScreen.java
+public class MonitoringScreen {
+    public MonitoringScreen(WeatherMonitoringSystem ws) {
+        System.out.println("MonitoringScreen was created");
+        ws.addTempObserver(new MSTempObserver(this));
+        System.out.println("MSTempObserver observes temperature");
+        ws.addPressObserver(new MSPressObserver(this));
+        System.out.println("MSPressObserver observes pressure");
     }
 
-    public void displayPressure(int pressure) {
-        System.out.println("Log: pressure = " + pressure + " millibars");
+    public void displayTemp(int data) {
+        System.out.println("MonitoringScreen: temperature = " + data + " Celsius");
     }
 
-    public void displayPressureTrend(Trend trend) {
-        System.out.println("Log: pressure trend = " + trend);
+    public void displayPress(int data) {
+        System.out.println("MonitoringScreen: pressure = " + data + " millibars");
     }
 }

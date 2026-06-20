@@ -1,4 +1,6 @@
 package WS1.Observers;
 
-public class Observer {
+// Observer.java
+public interface Observer {
+    void update(int data);
 }
